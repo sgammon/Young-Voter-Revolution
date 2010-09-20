@@ -1,0 +1,12 @@
+#!/Library/Frameworks/Python.framework/Versions/2.5/Resources/Python.app/Contents/MacOS/Python
+
+import sys
+sys.path[0:0] = [
+  '/Users/Sam/Workspace/Young Voter Revolution/etc/eggs/distribute-0.6.14-py2.5.egg',
+  '/Users/Sam/Workspace/Young Voter Revolution/etc/eggs/zc.buildout-1.4.4-py2.5.egg',
+  ]
+
+import zc.buildout.buildout
+
+if __name__ == '__main__':
+    zc.buildout.buildout.main()
