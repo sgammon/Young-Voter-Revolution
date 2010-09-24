@@ -1,0 +1,30 @@
+<html>
+
+	<!-- YOUNG VOTER REVOLUTION, DEV-1 -->
+	{% import "_macros.html" as ext %}
+
+	<head>
+
+		<title>{% block title %}{% endblock %}{{ title }}</title>
+		
+		{% include "_north.html" %}
+		
+		{% block head %}
+    	{% endblock %}
+
+	</head>
+
+	<body class='yvr'>    
+		
+		{% block precontent %}{% endblock %}	
+		<div id='wrapper'>
+			{% block content %}<p>YVR</p>{% endblock %}
+   		</div>
+
+		{% block postcontent %}{% endblock %}
+
+		{% include "_south.html" %}
+
+	</body>
+
+</html>

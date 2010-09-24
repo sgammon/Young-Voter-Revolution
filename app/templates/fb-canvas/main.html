@@ -1,0 +1,40 @@
+{% extends "_fbml.html" %}
+{% from "_macros.html" import renderForm %}
+
+{% block content %}
+
+<script>
+FB.getLoginStatus(function(response) {
+  
+  if (response.session) {
+
+	alert('Its all good');
+    alert(response.session);
+
+  }
+  else
+  {
+
+    alert('Shit failed');
+
+  }
+
+});
+</script>
+
+<fb:header>
+  Welcome, <fb:name uid='loggedinuser' useyou='false' linked='false' />!
+</fb:header>
+
+
+{% if pledge_form %}
+<div id='pledgeform_container'>
+
+	<form method='post' action='/_api/data/pledge' id='pledge_form'>
+		{{ renderForm(pledge_form) }}
+	</form>
+	
+</div>
+{% endif %}
+
+{% endblock %}

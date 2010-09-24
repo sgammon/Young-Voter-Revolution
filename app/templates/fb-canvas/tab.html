@@ -1,0 +1,32 @@
+{% extends "_fbml.html" %}
+
+{% block markup %}
+{% endblock markup %}
+
+
+{% block content %}
+<p>Pledge!</p>
+
+<fb:header>
+  Welcome, <fb:name uid='loggedinuser' useyou='false' linked='false'>!
+</fb:header>
+
+
+<div id='pledgeform'>
+	<form id='pledge_submit_form' name='pledge_submit' action='/_api/data/pledge' method='POST'>
+		<p>
+		
+		First Name: <input name='firstname' value="<fb:name uid='loggedinuser' firstnameonly='true' linked='false' useyou='false'>" /><br />
+		Last Name: <input name='lastname' value="<fb:name uid='loggedinuser' lastnameonly='true' linked='false' useyou='false'>" /><br />
+		Email: <input name='email' value='email' /><br />
+		Phone: <input name='phone' value='phone' /><br />
+		Zipcode: <input name='zipcode' value='zipcode' />
+		
+		</p>
+	</form>
+	
+	<p><fb:submit form='pledge_submit_form'>Submit!</fb:submit></p>
+	
+</div>
+
+{% endblock content %}

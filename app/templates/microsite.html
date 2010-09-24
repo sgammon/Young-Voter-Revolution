@@ -1,0 +1,55 @@
+{% extends "_base.html" %}
+
+{% from "_macros.html" import renderForm %}
+
+{% block head %}
+<link rel='stylesheet' href='/assets/style/forms-0.1.css' />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+{% endblock head %}
+
+
+{% block content %}
+<p>Afterauth</p>
+
+{% if pledgeSuccess %}
+<p>Pledge success!</b>
+{% endif %}
+
+{% if pledge_form %}
+<div id='pledgeform_container'>
+
+	<form method='post' action='/_api/data/pledge' id='pledge_form'>
+		{{ renderForm(pledge_form) }}
+	</form>
+	
+</div>
+{% endif %}
+
+{% endblock %}
+
+
+{% block postcontent %}
+
+{% block precontent %}
+{% include "fb-canvas/fbjs.html" %}
+
+<script type="text/javascript">
+
+user_obj = FB.api('/me', function(response) {
+	
+	$('#firstname_input').val(response.first_name);
+	$('#lastname_input').val(response.last_name);
+	$('#email_input').val(response.email);
+	$('#u_key_control').val(response.id);
+	$('#u_next_action_control').val(document.location.href);
+	$('#u_prev_action_control').val(document.location.href+'&pledgeSuccess=True');
+
+});
+
+
+</script>
+
+{% endblock %}
+
+{% include "dev_dump.html" %}
+{% endblock %}

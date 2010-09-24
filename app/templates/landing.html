@@ -1,0 +1,10 @@
+{% extends "_base.html" %}
+
+{% include "fb-canvas/fbjs.html" %}
+
+{% block content %}
+
+<p><a href='/fb'>Login via Facebook</a></p>
+<fb:login-button perms="email,user_about_me,sms"></fb:login-button>
+
+{% endblock %}

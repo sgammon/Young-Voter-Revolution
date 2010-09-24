@@ -1,0 +1,20 @@
+{% extends "_base.html" %}
+
+{% block title %}Dev - {% endblock %}
+
+{% block content %}
+<h2>YVR Development Helper</h2>
+
+	<p><b>Environment Vars:</b><br />
+		{% if ev %}
+			<ul>
+				{% for item in ev %}
+					<li>{{ item }} => {{ ev.item }}</li>
+				{% endfor %}
+			</ul>
+		{% else %}
+			No environment variables given :(.
+		{% endif %}
+	</p>
+
+{% endblock %}

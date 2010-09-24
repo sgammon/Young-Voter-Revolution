@@ -1,15 +1,31 @@
-application: my-app
-version: 1
+application: yvrevolution
+version: 2-dev
 runtime: python
 api_version: 1
 
-derived_file_type:
-- python_precompiled
+#derived_file_type:
+#- python_precompiled
 
 handlers:
 - url: /(robots\.txt|favicon\.ico)
   static_files: static/\1
   upload: static/(.*)
+
+- url: /assets/img
+  static_dir: app/yvr/assets/img
+  secure: optional
+
+- url: /assets/style
+  static_dir: assets/style
+  secure: optional
+
+- url: /assets/js
+  static_dir: assets/js
+  secure: optional
+
+- url: /assets/ext
+  script: assets/ext.py
+  secure: optional
 
 - url: /remote_api
   script: $PYTHON_LIB/google/appengine/ext/remote_api/handler.py

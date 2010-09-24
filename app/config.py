@@ -18,6 +18,13 @@ config['tipfy'] = {
     ],
     # Enable the Hello, World! app example.
     'apps_installed': [
-        'apps.hello_world',
+        'apps.yvr',
     ],
 }
+
+config['tipfy.ext.auth.facebook'] = {
+    'api_key':    '162867180394678',
+    'app_secret': 'dc90c5891c685f2e44f43e249a0599b5',
+}
+
+twilio = {'from_number':'4155992671', 'account_sid':'AC8cb910ac2bc06ed184232be22bca8cf2', 'auth_token':'e3eddb2fcb7ba2f9c63f7390f6751626'}

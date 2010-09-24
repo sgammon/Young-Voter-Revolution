@@ -1,0 +1,11 @@
+queue:
+    
+- name: default
+  rate: 1/s
+
+- name: outbound-mail
+  rate: 2000/d
+  bucket_size: 10
+
+- name: outbound-sms
+  rate: 5/s

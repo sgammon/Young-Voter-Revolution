@@ -1,0 +1,22 @@
+<hr />
+<h3>Debug Info</h3>
+<p><b>POST Vars:</b><ul>
+	{% if dev.postvars %}
+		{% for postvar, value in dev.postvars %}
+			<li>{{ postvar }}: {{ value }}</li>
+		{% endfor %}
+	{% else %}
+		<li>No postvars given.</li></ul>
+	{% endif %}
+</p>
+
+
+<p><b>GET Vars:</b><ul>
+	{% if dev.getvars %}
+		{% for getvar, value in dev.getvars %}
+			<li>{{ getvar }}: {{ value }}</li>
+		{% endfor %}
+	{% else %}
+		<li>No postvars given.</li></ul>
+	{% endif %}
+</p>
