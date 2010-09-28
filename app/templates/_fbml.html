@@ -1,7 +1,16 @@
 <div id="fb-root"></div>
 
 {% block markup %}
+
 {% include "fb-canvas/fbjs.html" %}
+
+<script>
+FB.Event.subscribe('fb.log', function(response) {
+	alert(response);
+});
+</script>
+
+
 {% endblock %}
 
 
@@ -9,5 +18,6 @@
 
 
 {% block dev %}
+
 {% include "dev_dump.html" %}
 {% endblock dev %}

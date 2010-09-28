@@ -92,20 +92,24 @@
 {%- endmacro -%}
 
 
-{%- macro renderForm(fields) -%}
+{%- macro renderForm(id, action, method, fields) -%}
 
-    {% for field in fields %}
-        {% if field.type == 'HiddenField' %}
-            {{ field() }}
-        {% endif %}
-    {% endfor %}
+	<form id='{{ id }}' action='{{ action }}' method='{{ method }}' class="tipfy-form">
 
-    <ol>
-    {% for field in fields %}
-        {% if field.type != 'HiddenField' %}
-            <li>{{ form_field(field) }}</li>
-        {% endif %}
-    {% endfor %}
-    </ol>
+	    {% for field in fields %}
+	        {% if field.type == 'HiddenField' %}
+	            {{ field() }}
+	        {% endif %}
+	    {% endfor %}
+
+	    <ul>
+	    {% for field in fields %}
+	        {% if field.type != 'HiddenField' %}
+	            <li>{{ form_field(field) }}</li>
+	        {% endif %}
+	    {% endfor %}
+	    </ul>
+
+	</form>
 
 {%- endmacro -%}

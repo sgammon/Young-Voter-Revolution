@@ -2,29 +2,8 @@
 {% from "_macros.html" import renderForm %}
 
 {% block content %}
-
-<script>
-FB.getLoginStatus(function(response) {
-  
-  if (response.session) {
-
-	alert('Its all good');
-    alert(response.session);
-
-  }
-  else
-  {
-
-    alert('Shit failed');
-
-  }
-
-});
-</script>
-
-<fb:header>
-  Welcome, <fb:name uid='loggedinuser' useyou='false' linked='false' />!
-</fb:header>
+<div >
+Welcome, <fb:name uid='loggedinuser' useyou='false' linked='false' />!
 
 
 {% if pledge_form %}

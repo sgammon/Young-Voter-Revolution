@@ -1,32 +1,52 @@
 {% extends "_fbml.html" %}
+{% from "_macros.html" import renderForm %}
 
 {% block markup %}
 {% endblock markup %}
 
 
 {% block content %}
+
+<script>
+FB.getLoginStatus(function(response) {
+  
+  if (response.session) {
+
+	alert('It worked! '+response);
+
+  }
+  else
+  {
+
+    alert('Shit failed');
+
+  }
+
+});
+</script>
+
 <p>Pledge!</p>
 
-<fb:header>
-  Welcome, <fb:name uid='loggedinuser' useyou='false' linked='false'>!
-</fb:header>
 
+{% if pledge_form %}
 
-<div id='pledgeform'>
-	<form id='pledge_submit_form' name='pledge_submit' action='/_api/data/pledge' method='POST'>
-		<p>
-		
-		First Name: <input name='firstname' value="<fb:name uid='loggedinuser' firstnameonly='true' linked='false' useyou='false'>" /><br />
-		Last Name: <input name='lastname' value="<fb:name uid='loggedinuser' lastnameonly='true' linked='false' useyou='false'>" /><br />
-		Email: <input name='email' value='email' /><br />
-		Phone: <input name='phone' value='phone' /><br />
-		Zipcode: <input name='zipcode' value='zipcode' />
-		
-		</p>
+	<form action='http://yvrevolution.appspot.com/_api/data/pledge' method='POST'>
+		{{ renderForm(pledge_form) }}
 	</form>
+
+{% endif %}
+
+<script>
+user_obj = FB.api('/me', function(response) {
 	
-	<p><fb:submit form='pledge_submit_form'>Submit!</fb:submit></p>
-	
-</div>
+	$('#firstname_input').val(response.first_name);
+	$('#lastname_input').val(response.last_name);
+	$('#email_input').val(response.email);
+	$('#u_fbid_control').val(response.id);
+	$('#u_next_action_control').val(document.location.href+'&pledgeSuccess=True');
+	$('#u_prev_action_control').val(document.location.href);
+
+});
+</script>
 
 {% endblock content %}

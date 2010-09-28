@@ -1,11 +1,89 @@
 <script src="http://connect.facebook.net/en_US/all.js"></script>
+
 <script>
-  FB.init({
-    appId  : '{{ fb_app_id }}',
-    status : true, // check login status
-    cookie : true, // enable cookies to allow the server to access the session
-    xfbml  : true  // parse XFBML
-  });
+
+	FB.init({
+		appId  : '{{ fb_app_id }}',
+		status : true, // check login status
+		cookie : true, // enable cookies to allow the server to access the session
+		xfbml  : true  // parse XFBML
+	});
+	
+
+	function setInfo(response)
+	{	
+		$('#firstname_input').val(response.first_name);
+		$('#lastname_input').val(response.last_name);
+		$('#email_input').val(response.email);
+		$('#u_key_control').val('{{ u_key }}');
+		$('#u_next_action_control').val(document.location.href+'&pledgeSuccess=True');
+		$('#u_prev_action_control').val(document.location.href);
+	}
+	
+	function onLogin()
+	{
+		FB.api('/me', setInfo);
+	}	
+	
+	function setSubscribes()
+	{
+		FB.Event.subscribe('fb.log', function (response) {alert(response);})
+	}	
+
+	function fbLogin()
+	{
+		FB.login(
+
+			function (response)
+			{
+				if(response.session)
+				{
+					$('#auth_status').text('Success');
+					onLogin();
+				}
+				else
+				{
+					$('#auth_status').text('Failure');
+				}
+			}
+		, {perms:'sms,email'});
+
+	}
+	
+	function shareViaStatus()
+	{
+		FB.ui(
+		{
+			method: 'stream.publish',
+			message: 'I pledge to vote in 2010! I\'m young, I\'m blue and I play to win!',
+			attachment: {
+				name: 'Pledge to Vote',
+				caption: 'Young Voter Revolution 2010',
+				description: (
+					'There are too many important issues on the ballot ' +
+					'to ignore. If you want to see the world around you improve, ' +
+					'pledge to vote today!.'
+				),
+				href: 'http://yvrevolution.appspot.com'
+			},
+			action_links: [
+				{ text: 'Pledge!', href: 'http://yvrevolution.appspot.com/fb' }
+			],
+			user_message_prompt: 'Urge your friends to pledge too!'},
+			
+			function(response)
+			{
+				if (response && response.post_id) {
+					alert('Post was published.');
+				}
+				else
+				{
+					alert('Post was not published.');
+				}
+			}
+ 		);
+	}
+
 
 FB.XFBML.parse();
 

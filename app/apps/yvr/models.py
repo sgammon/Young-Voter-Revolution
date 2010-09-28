@@ -66,6 +66,6 @@ class OutboundSMS(OutreachAction):
     
 class OutboundEmail(OutreachAction):
     user = db.ReferenceProperty(User, collection_name='sent_email')
-    from_email = db.EmailProperty()
     to_email = db.EmailProperty()
+    subject = db.StringProperty()
     message = db.TextProperty()

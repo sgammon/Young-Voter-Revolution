@@ -1,13 +1,13 @@
 import urllib, logging, simplejson
 
 from google.appengine.ext import db
-from google.appengine.api import urlfetch
+from google.appengine.api import urlfetch, mail
 
 from tipfy import RequestHandler, Response
 from tipfy.ext.jinja2 import render_response
 
 from config import twilio
-from apps.yvr.models import OutboundSMS
+from apps.yvr.models import OutboundSMS, OutboundEmail
 
 _twilio_api_scheme = 'https'
 _twilio_api_username = twilio['account_sid']
@@ -83,6 +83,8 @@ class SendSMS(RequestHandler):
                     
                     ## Build the POST request
                     result = urlfetch.fetch(url=url,
+                    
+                    
                                             payload=form_data,
                                             method=urlfetch.POST,
                                             headers={'Content-Type': 'application/x-www-form-urlencoded'})
@@ -141,3 +143,35 @@ class SMSCallback(RequestHandler):
                 ticket.put()
                 
                 logging.info('Ticket processed and updated with key "'+str(ticket.key())+'".')
+                
+                
+class SendMail(RequestHandler):
+    
+    def post(self):
+        
+        ticket_key = self.request.form.get('ticket', False)
+        
+        logging.debug('Beginning new queued mail request.')
+        logging.debug('Ticket key = '+str(ticket_key))
+        
+        if ticket_key is not False:
+            
+            ticket = db.get(db.Key(str(ticket_key)))
+            logging.debug('Pulled ticket = '+str(ticket))
+            
+            if ticket is not None:
+                
+                if not mail.is_email_valid(ticket.to_email):
+                    
+                    logging.error('Given recipient address is invalid as reported by the GAE Mail API. Failing.')
+                    abort(400)
+                    
+                else:
+                    mail.send_mail( sender="Pledge to Vote 2010! <pledge@yvrevolution.com>",
+                                    to=ticket.to_email,
+                                    subject=ticket.subject,
+                                    body=ticket.message)
+            
+        else:
+            logging.critical('Ticket key not provided. Failing.')
+            abort(400)

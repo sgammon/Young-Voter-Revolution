@@ -33,10 +33,12 @@ def get_rules(app):
 
         ## Form Endpoints
         Rule('/_api/data/pledge', endpoint='pledge-submit', handler='apps.yvr.handlers.PledgeSubmit'),
+        Rule('/_api/data/invite', endpoint='invites-send', handler='apps.yvr.handlers.EmailInvites'),
 
-        ## Queue/Twilio Endpoints
+        ## Queue/Twilio/Email Endpoints
         Rule('/_api/sms/send', endpoint='outbound-sms-queue', handler='apps.yvr.workers.SendSMS'),
-        Rule('/_api/sms/callback', endpoint='outbound-sms-callback', handler='apps.yvr.workers.SMSCallback')
+        Rule('/_api/sms/callback', endpoint='outbound-sms-callback', handler='apps.yvr.workers.SMSCallback'),
+        Rule('/_api/mail/send', endpoint='outbound-mail-queue', handler='apps.yvr.workers.SendMail')
 
     ]
 
