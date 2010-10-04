@@ -1,0 +1,19 @@
+{% from "_macros.html" import img, renderForm %}
+
+<div id='layout'>
+	<div class='textcenter center'>{{ img('layout/pledge-today.gif', 'Do your part. Vote on Nov 2nd!', sys) }}</div>
+	
+	<div class='textcenter center'>
+			<div id='authbar' class='textcenter center'>
+				<div class='center' id='userbox'>
+					
+				</div>
+			</div>
+			<div class='textcenter center'>
+				{{ renderForm(pledge_form, sys, id='pledge_form', action='/_api/data/pledge', class='yvr-form textleft center fb-compact-form', method='post') }}
+			</div>
+	</div>
+	<div class='clearboth'></div>
+
+	
+</div>

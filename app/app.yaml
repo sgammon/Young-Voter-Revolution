@@ -12,7 +12,7 @@ handlers:
   upload: static/(.*)
 
 - url: /assets/img
-  static_dir: app/yvr/assets/img
+  static_dir: assets/img
   secure: optional
 
 - url: /assets/style

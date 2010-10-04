@@ -1,0 +1,180 @@
+/* ===== YVR Site Theme
+
+
+/* Body/Wrapper Classes */
+*
+{
+    font-family:Arial, Verdana;
+    font-size:13px;    
+}
+
+body.yvr
+{
+    text-align:center;
+    display:inline;
+    font-family:Arial, Verdana;
+    font-size:13px;
+}
+
+h1
+{
+    font-size:30px;
+}
+
+#wrapper
+{
+    overflow:hidden;
+    width:631px;
+    margin-top:5px;
+    margin-left:auto;
+    margin-right:auto;
+    min-height:500px;
+
+}
+
+#wrapper-compact
+{
+    width:700px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#wrapper-compact #left
+{
+    margin-top:15%;
+}
+
+
+/* Slammer Layout Classes */
+#layout
+{
+    margin-bottom:25px;
+}
+
+#layout #left
+{
+    float:left;
+}
+
+#layout #spacer
+{
+    float:left;
+}
+
+#layout #right
+{
+    float:right;
+    margin-top:15px;
+}
+
+
+/* Authbar */
+#layout #right #authbar
+{
+    width:100%;
+    height:50px;
+    font-size:15px;
+}
+#layout #right #authbar #userbox
+{
+    padding-top:10px;
+    height:50px;
+    width:310px;
+}
+#layout #right #authbar #userbox a div
+{
+    width:150px;
+    height:22px;   
+}
+#username
+{
+    font-weight:bold;
+    font-size:17px;
+}
+#provider
+{
+    font-size:10px;
+}
+#provider a
+{
+    font-size:10px;
+}
+
+
+/* Issues List */
+#issueslist
+{
+    margin-top:30px;
+}
+#issueslist .issue
+{
+    height:45px;
+    background:#a3adcb;
+    line-height:50px;
+    padding-left:9px;
+    padding-right:9px;
+    margin-bottom:20px;
+    font-size:19px;
+    color:white;
+    text-transform:uppercase;
+}
+
+
+#fb div {  float:left; }
+#fb:link div { background-image:url('/assets/img/signin/facebook-01.png'); background-position:top left; }
+#fb:hover div { background-position:center left !important; }
+#fb:active div { background-position:bottom left !important; }
+
+#tw div { float:right; }
+#tw:link div { background-image:url('/assets/img/signin/twitter-01.png'); }
+#tw:hover div { background-position:center left !important; }
+#tw:active div { background-position:bottom left !important; }
+
+
+/* Text Styling */
+#congrats { color:green; font-size:15pt; text-transform:uppercase; }
+
+/* Share Form */
+#share #pledgeSuccess { margin-bottom:20px; margin-top:30px; }
+#share img { margin-top:15px; }
+
+
+/* ===== A-la-carte Styling Classes
+
+
+/* Display Utilities */
+.hidden { display:none; }
+.block { display:block; }
+.inline { display:inline; }
+
+/* Layout Objects */
+.box { min-height:200px; display:inline; }
+.box .header { width:100%; background-color:#3e60b3; height:30px; text-align:left; padding-left:5px;  }
+.box .header p { display:inline; text-transform:uppercase; color:#fff; font-family:Arial; line-height:30px; font-size:20px; }
+.box .body { margin-left:0; margin-right:0;; }
+.spacer { width:20px; }
+.smallspacer { width:7px; }
+.tinybox { width:99%; margin-top:20px; }
+.center { margin-left:auto; margin-right:auto; }
+
+/* Text Alignment */
+.textleft { text-align:left; }
+.textright { text-align:right; }
+.textcenter { text-align:center; }
+
+/* Float Clearing */
+.clearleft { clear:left; }
+.clearright { clear:right; }
+.clearboth { clear:both; }
+
+/* Float Setting */
+.floatleft { float:left; }
+.floatright { float:right; }
+
+/* Width */
+.width-full { width:99%; }
+.width-half { width:48%; }
+
+/* Height */
+.height-full { height:99%; }
+.height-half { height:99%; }

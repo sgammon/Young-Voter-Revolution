@@ -20,7 +20,7 @@
 
 		{% else %}
 			
-			{{ renderForm('invites_form', '/_api/data/invite', 'post', invites_form) }}
+			{{ renderForm('invites_form', sys, '/_api/data/invite', 'post', invites_form) }}
 			
 		{% endif %}
 
@@ -31,7 +31,7 @@
 	<p>Auth: <b id='auth_status'>Not Authenticated</b></p>
 
 	<div id='pledgeform_container'>
-		{{ renderForm('pledge_form', '/_api/data/pledge', 'post', pledge_form) }}	
+		{{ renderForm(pledge_form, sys, id='pledge_form', action='/_api/data/pledge', method='post') }}
 	</div>
 
 	{% endif %}

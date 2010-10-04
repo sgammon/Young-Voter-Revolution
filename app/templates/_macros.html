@@ -8,9 +8,14 @@
 {%- endmacro %}
 
 
-{% macro img(url, alt='', absolute=False, class='') -%}
+{% macro img(url, alt, sys, absolute=True, class='') -%}
 	
-	{% if absolute %}<img src='{{ url }}' alt='{{ alt }}' class='{{ class }}'/>
+	{% if absolute %}
+		{% if sys.dev.is_dev %}
+			<img src='http://localhost:8080/assets/img/{{ url }}' alt='{{ alt }}' class='{{ class }}'/>
+		{% else %}
+			<img src='http://yvrevolution.appspot.com/assets/img/{{ url }}' alt='{{ alt }}' class='{{ class }}'>
+		{% endif %}
 	{% else %}<img src='/assets/img/{{ url }}', alt='{{ alt }}', class='{{ class }}'>{% endif %}
 
 {%- endmacro %}
@@ -25,7 +30,7 @@
 
 
 {%- macro form_field_label(field) -%}
-    <label for="{{ field.id }}">{{ field.label.text }}
+    <label for="{{ field.id }}" class='fieldlabel'>{{ field.label.text }}
     {%- if field.flags.required -%}
         <abbr title="{{ _('This field is required.') }}">*</abbr>
     {%- endif %}</label>
@@ -55,18 +60,27 @@
 {%- endmacro -%}
 
 {%- macro form_field(field) -%}
-    {% if field.type == 'BooleanField' %}
-        {{ form_field_boolean(field, **kwargs) }}
-    {% else%}
-        {{ form_field_label(field) }}
-        {% if field.type == 'RadioField' %}
-            {{ field(class='radio-group', **kwargs) }}
-        {% else %}
-            {{ field(**kwargs) }}
-        {% endif %}
-        {{ form_field_description(field) }}
-        {{ form_field_errors(field) }}
-    {% endif %}
+
+	{% if field.type == 'SubmitField' %}
+		{{ field() }}
+	{% else %}
+		{% if field.type == 'MultiCheckboxField' %}
+			{{ field() }}
+		{% else %}
+		    {% if field.type == 'BooleanField' %}
+		        {{ form_field_boolean(field, **kwargs) }}
+		    {% else%}
+		        {{ form_field_label(field) }}
+		        {% if field.type == 'RadioField' %}
+		            {{ field(class='radio-group', **kwargs) }}
+		        {% else %}
+		            {{ field(**kwargs) }}
+		        {% endif %}
+		        {{ form_field_description(field) }}
+		        {{ form_field_errors(field) }}
+		    {% endif %}
+		{% endif %}
+	{% endif %}
 {%- endmacro -%}
 
 {%- macro form_field_td(field) -%}
@@ -92,20 +106,20 @@
 {%- endmacro -%}
 
 
-{%- macro renderForm(id, action, method, fields) -%}
+{%- macro renderForm(form_object, sys) -%}
 
-	<form id='{{ id }}' action='{{ action }}' method='{{ method }}' class="tipfy-form">
+	<form{% if kwargs.id %} id='{{ kwargs.id }}'{% endif %}{% if kwargs.action %} action='{% if sys.is_dev %}http://localhost:8080{% else %}http://yvrevolution.appspot.com{% endif %}{{ kwargs.action }}'{% endif %}{% if kwargs.method %} method='{{ kwargs.method }}'{% endif %}{% if kwargs.class %} class='{{ kwargs.class }}'{% else %} class="tipfy-form"{% endif %}>
 
-	    {% for field in fields %}
+	    {% for field in form_object %}
 	        {% if field.type == 'HiddenField' %}
 	            {{ field() }}
-	        {% endif %}
+	        {% endif %}	
 	    {% endfor %}
 
 	    <ul>
-	    {% for field in fields %}
+	    {% for field in form_object %}
 	        {% if field.type != 'HiddenField' %}
-	            <li>{{ form_field(field) }}</li>
+	            <li><div id='{{ kwargs.id }}-{{ field.id }}-box' class='fieldbox'>{{ form_field(field) }}</div></li>
 	        {% endif %}
 	    {% endfor %}
 	    </ul>

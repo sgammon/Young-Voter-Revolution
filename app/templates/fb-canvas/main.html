@@ -1,19 +1,45 @@
 {% extends "_fbml.html" %}
-{% from "_macros.html" import renderForm %}
+{% from "_macros.html" import renderForm, img %}
+
+
 
 {% block content %}
-<div >
-Welcome, <fb:name uid='loggedinuser' useyou='false' linked='false' />!
 
-
-{% if pledge_form %}
-<div id='pledgeform_container'>
-
-	<form method='post' action='/_api/data/pledge' id='pledge_form'>
-		{{ renderForm(pledge_form) }}
-	</form>
+<!-- Issues Description Box -->
+<div class='floatleft width-half box' id='issues'>
 	
+	<div class='header'><p>If you care about...</p></div>
+	
+	<div class='body'>
+		
+		<div id='issueslist'>
+			
+			<div class='issue textright'>Same-Sex Marriage</div>
+			<div class='issue textleft'>Abortion</div>
+			<div class='issue textright'>Legalizing Cannabis</div>
+			<div class='issue textleft'>Civil Rights & Equality</div>
+			<div class='issue textright'>Healthcare Reform</div>
+			<div class='issue textleft'>Financial Reform</div>
+			
+		</div>
+		
+	</div>
+
 </div>
-{% endif %}
+
+<!-- Spacer -->
+<div class='spacer box'></div>
+
+<div class='floatright width-half box' id='pledge'>
+	<div class='header'><p>Pledge!</p></div>
+	<div class='body'>
+		{% if pledge_form %}
+			{{ renderForm(pledge_form, sys, id='pledge_form', action='/_api/data/pledge', class='yvr-form textleft center fb-main-form', method='post') }}
+			<div class='textcenter center' id='submit_box'><fb:submit form='pledge_form'>{{ img('pledge-0.1.gif', 'Pledge now!', sys) }}</fb:submit></div>
+		{% else %}
+			<p class='textcenter center'>Pledging is currently unavailable. Sorry for any inconvenience this may cause.</p>
+		{% endif %}
+	</div>
+</div>
 
 {% endblock %}

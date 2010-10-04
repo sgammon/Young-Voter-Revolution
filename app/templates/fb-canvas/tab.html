@@ -1,52 +1,6 @@
 {% extends "_fbml.html" %}
 {% from "_macros.html" import renderForm %}
 
-{% block markup %}
-{% endblock markup %}
+{% block wrapperid %}wrapper-compact{% endblock %}
 
-
-{% block content %}
-
-<script>
-FB.getLoginStatus(function(response) {
-  
-  if (response.session) {
-
-	alert('It worked! '+response);
-
-  }
-  else
-  {
-
-    alert('Shit failed');
-
-  }
-
-});
-</script>
-
-<p>Pledge!</p>
-
-
-{% if pledge_form %}
-
-	<form action='http://yvrevolution.appspot.com/_api/data/pledge' method='POST'>
-		{{ renderForm(pledge_form) }}
-	</form>
-
-{% endif %}
-
-<script>
-user_obj = FB.api('/me', function(response) {
-	
-	$('#firstname_input').val(response.first_name);
-	$('#lastname_input').val(response.last_name);
-	$('#email_input').val(response.email);
-	$('#u_fbid_control').val(response.id);
-	$('#u_next_action_control').val(document.location.href+'&pledgeSuccess=True');
-	$('#u_prev_action_control').val(document.location.href);
-
-});
-</script>
-
-{% endblock content %}
+{% block precontent %}{% include "_mast_layout_compact.html" %}{% endblock %}

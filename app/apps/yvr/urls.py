@@ -22,23 +22,30 @@ def get_rules(app):
     rules = [
 
         ## Main Endpoints
-        Rule('/', endpoint='landing', handler='apps.yvr.handlers.LandingHandler'),
-        Rule('/dev', endpoint='dev', handler='apps.yvr.handlers.DevHandler'),
-        Rule('/fb', endpoint='facebook-auth', handler='apps.yvr.handlers.FacebookInit'),
+        Rule('/', endpoint='landing', handler='apps.yvr.handlers.microsite.LandingHandler'), ## index is entrypoint to the microsite
+        Rule('/dev', endpoint='dev', handler='apps.yvr.handlers.DevHandler'), ## dev handler for system use
         
         ## Facebook Endpoints
-        Rule('/_api/canvas/', endpoint='facebook-canvas', handler='apps.yvr.handlers.FacebookCanvas'),
-        Rule('/_api/canvas/tab/', endpoint='facebook-tab', handler='apps.yvr.handlers.FacebookTab'),
-        Rule('/_api/deauthorize', endpoint='facebook-deauthorize', handler='apps.yvr.handlers.FacebookDeauthorize'),
+        Rule('/fb', endpoint='facebook-auth', handler='apps.yvr.handlers.facebook.FacebookInit'), ## facebook auth initiation
+        Rule('/_api/canvas/', endpoint='facebook-canvas', handler='apps.yvr.handlers.facebook.FacebookCanvas'), ## facebook canvas (application main page)
+        Rule('/_api/canvas/tab/', endpoint='facebook-tab', handler='apps.yvr.handlers.facebook.FacebookTab'), ## facebook canvas for profile tabs
+        Rule('/_api/deauthorize', endpoint='facebook-deauthorize', handler='apps.yvr.handlers.facebook.FacebookDeauthorize'), ## deauthorize endpoint for app removal
 
         ## Form Endpoints
-        Rule('/_api/data/pledge', endpoint='pledge-submit', handler='apps.yvr.handlers.PledgeSubmit'),
-        Rule('/_api/data/invite', endpoint='invites-send', handler='apps.yvr.handlers.EmailInvites'),
+        Rule('/_api/data/pledge', endpoint='pledge-submit', handler='apps.yvr.handlers.PledgeSubmit'), ## POST endpoint for submitted pledges
+        Rule('/_api/data/invite', endpoint='invites-send', handler='apps.yvr.handlers.EmailInvites'), ## POST endpoint for queued email invites
 
         ## Queue/Twilio/Email Endpoints
-        Rule('/_api/sms/send', endpoint='outbound-sms-queue', handler='apps.yvr.workers.SendSMS'),
-        Rule('/_api/sms/callback', endpoint='outbound-sms-callback', handler='apps.yvr.workers.SMSCallback'),
-        Rule('/_api/mail/send', endpoint='outbound-mail-queue', handler='apps.yvr.workers.SendMail')
+        Rule('/_api/sms/send', endpoint='outbound-sms-queue', handler='apps.yvr.workers.SendSMS'), ## queue worker for outgoing twilio SMS
+        Rule('/_api/sms/callback', endpoint='outbound-sms-callback', handler='apps.yvr.workers.SMSCallback'), ## callback for outgoing twilio SMS
+        Rule('/_api/mail/send', endpoint='outbound-mail-queue', handler='apps.yvr.workers.SendMail'), ## queue worker for outgoing mail
+        
+        ## Admin Panel Stuff
+        Rule('/manage/data', endpoint='admin-data-index', handler='apps.yvr.handlers.admin.Index'), ## admin panel index page
+        Rule('/manage/data/key/<string:key>', endpoint='admin-data-view', handler='apps.yvr.handlers.admin.View'), ## generates a view/edit for a record        
+        Rule('/manage/data/list/<string:type>', endpoint='admin-data-list', handler='apps.yvr.handlers.admin.List'), ## lists records for a kind
+        Rule('/manage/data/create/<string:type>', endpoint='admin-data-create', handler='apps.yvr.handlers.admin.Create'), ## generate create form for data item
+        Rule('/manage/data/delete/<string:key>', endpoint='admin-data-delete', handler='apps.yvr.handlers.admin.Delete') ## delete a given key
 
     ]
 

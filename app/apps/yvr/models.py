@@ -12,11 +12,21 @@ class User(polymodel.PolyModel):
     email = db.EmailProperty()
     phone = db.PhoneNumberProperty()
     has_pledged = db.BooleanProperty()
+
+    modifiedAt = db.DateTimeProperty(auto_now=True)
+    createdAt = db.DateTimeProperty(auto_now_add=True)
     
 
 class FacebookUser(User):
     
     uid = db.StringProperty(required=True)
+    
+    
+class MicrositeUser(User):
+    
+    FORM_EXCLUDE=['ip_addr']
+    
+    ip_addr = db.StringProperty()
 
 
 class Pledge(db.Model):
@@ -30,8 +40,8 @@ class Pledge(db.Model):
 class List(polymodel.PolyModel):
     name = db.StringProperty()
     description = db.TextProperty()
+    form_question = db.StringProperty()    
     show_public = db.BooleanProperty()
-    question_text = db.StringProperty()
     
     
 class InterestList(List):
@@ -49,8 +59,8 @@ class EmailList(List):
 class ListMember(db.Model):
     user = db.ReferenceProperty(User, collection_name='lists')
     list = db.ReferenceProperty(List, collection_name='users')
-    opted_in = db.BooleanProperty()
-    double_opted_in = db.BooleanProperty()
+    opted_in = db.BooleanProperty(default=False)
+    double_opted_in = db.BooleanProperty(default=False)
 
 
 class OutreachAction(polymodel.PolyModel):

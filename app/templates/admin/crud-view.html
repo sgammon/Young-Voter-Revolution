@@ -1,0 +1,28 @@
+{% extends "admin/_admin.html" %}
+{% from "_macros.html" import renderForm %}
+
+{% block subtitle %}Data Viewer{% endblock %}
+
+{% block content %}
+
+	{% if object %}
+		<h2><b>Kind:</b> {{ object.kind() }}{% if object.parent() %} -> <b>Parent:</b> {{ object.parent() }}{% endif %}{% if object.key().name() %} -> <b>Name:</b> {{ object.key().name() }}{% else %} -> <b>ID:</b> {{ object.key().id() }}{% endif %}</h2>
+
+		{% if form %}
+	
+			{% if editform %}
+				{{ renderForm(form, sys, id='crud-edit-form', action='/manage/data/key/{{ object.key }}', method='post', class='yvr-form crudform') }}
+			{% else %}
+				{{ renderForm(form, sys, id='crud-view-form', action='/manage/data/key/{{ object.key }}', method='post', class='filledform crudform yvr-form', sys) }}
+			{% endif %}
+	
+		{% else %}
+	
+			<p>No object data given.</p>
+	
+		{% endif %}
+	{% else %}
+		<p>No object data given.</p>
+	{% endif %}
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% from "_macros.html" import img %}
+
+<div id='layout'>
+	<div id='left'>{{ img('layout/microsite-17_01-A.gif', '2010 Young Voter Revolution', sys) }}</div>
+	<div id='spacer'>{{ img('layout/microsite-17_02-B.png', '{spacer}', sys) }}</div>
+	<div id='right'>
+			<div id='authbar' class='textcenter center'>
+				<div class='center' id='userbox'>
+					<p>Welcome, <fb:name uid='loggedinuser' useyou='false' linked='true'></fb:name>!</p>
+				</div>
+			</div>
+			<div class='textcenter center'>
+				{{ img('layout/microsite-17_04-D.png', 'Do your part. Vote on Nov 2nd!', sys) }}
+			</div>
+	</div>
+	<div class='clearboth'></div>
+	<div id='plug'>{{ img('layout/microsite-17_05-E.gif', 'Pledge Today', sys) }}</div>
+</div>

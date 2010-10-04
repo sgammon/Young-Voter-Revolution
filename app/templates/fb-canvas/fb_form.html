@@ -1,0 +1,30 @@
+<form action='{% if sys.is_dev %}http://localhost:8080/{% else %}http://yvrevolution.appspot.com/{% endif %}_api/data/pledge' method='post' id='pledge_form' class='yvr-form textleft center fb-main-form'>
+
+<fb:tag name='input'>
+	<fb:tag-attribute name='type'>hidden</fb:tag-attribute>
+	<fb:tag-attribute name='name'>firstname</fb:tag-attribute>
+	<fb:tag-attribute name='value'><fb:name firstnameonly='true' useyou='false' linked='false'></fb:name></fb:tag-attribute>
+</fb:tag>
+
+<p id="firstname_input-set" class="setfield"><fb:name firstnameonly='true' useyou='false' linked='false'></fb:name></p>
+
+<fb:tag name='input'>
+	<fb:tag-attribute name='type'>hidden</fb:tag-attribute>
+	<fb:tag-attribute name='name'>lastname</fb:tag-attribute>
+	<fb:tag-attribute name='value'><fb:name lastnameonly='true' useyou='false' linked='false'></fb:name></fb:tag-attribute>
+</fb:tag>
+
+<p id="lastname_input-set" class="setfield"><fb:name lastnameonly='true' useyou='false' linked='false'></fb:name></p>
+
+<input id="email_input" name="email" type="text" value="" />
+<input id="zipcode_input" name="zipcode" type="text" value="" />
+<input id="phone_input" name="phone" type="text" value="" />
+<textarea id="message_input" name="message"></textarea>
+<ul id="u_lists"></ul>
+<input id="u_next_action_control" name="u_nextAction" type="hidden" value="http://apps.facebook.com/yvrevolution?pledgeSuccess=true" />
+<input id="u_prev_action_control" name="u_prevAction" type="hidden" value="http://apps.facebook.com/yvrevolution?pledgeFail=true" />
+
+<input id="u_key_control" name="u_key" type="hidden" value="" />
+<input id="u_fbid_control" name="u_fbid" type="hidden" value="" />
+
+</form>

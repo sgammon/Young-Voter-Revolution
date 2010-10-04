@@ -1,7 +1,7 @@
 <html>
 
 	<!-- YOUNG VOTER REVOLUTION, DEV-1 -->
-	{% import "_macros.html" as ext %}
+	{% from "_macros.html" import fbjsInit %}
 
 	<head>
 
@@ -16,12 +16,44 @@
 
 	<body class='yvr'>    
 		
-		{% block precontent %}{% endblock %}	
-		<div id='wrapper'>
-			{% block content %}<p>YVR</p>{% endblock %}
-   		</div>
 
-		{% block postcontent %}{% endblock %}
+		<div id='wrapper'>
+			
+			<!-- Asynchronous FB -->
+			<div id='fb-root'></div>
+			<script>
+				window.fbAsyncInit = function() {
+					FB.init(
+						{
+							appId: '162867180394678',
+							status: true,
+							cookie: true,
+			            	xfbml: true
+						}
+					);
+			  };
+			  (
+				function()
+				{
+			    	var e = document.createElement('script');
+					e.async = true;
+			    	e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+			    	document.getElementById('fb-root').appendChild(e);
+			  }());
+			</script>
+			
+			{% block precontent %}
+			{% include "_mast_layout.html" %}
+			{% endblock %}
+
+			<div id='content' class='{% block contentclass %}{% endblock %}'>
+				{% block content %}<p>YVR</p>{% endblock %}
+	   		</div>
+
+			{% block postcontent %}
+				{% include "fb-canvas/fbjs.html" %}
+			{% endblock %}
+		</div>
 
 		{% include "_south.html" %}
 

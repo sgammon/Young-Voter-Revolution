@@ -1,10 +1,81 @@
 {% extends "_base.html" %}
-
-{% include "fb-canvas/fbjs.html" %}
+{% from "_macros.html" import renderForm %}
 
 {% block content %}
 
-<p><a href='/fb'>Login via Facebook</a></p>
-<fb:login-button perms="email,user_about_me,sms"></fb:login-button>
+<!-- Issues Description Box -->
+<div class='floatleft width-half box' id='issues'>
+	
+	<div class='header'><p>If you care about...</p></div>
+	
+	<div class='body'>
+		
+		<div id='issueslist'>
+			
+			<div class='issue textright'>Same-Sex Marriage</div>
+			<div class='issue textleft'>Abortion</div>
+			<div class='issue textright'>Legalizing Cannabis</div>
+			<div class='issue textleft'>Civil Rights & Equality</div>
+			<div class='issue textright'>Healthcare Reform</div>
+			<div class='issue textleft'>Financial Reform</div>			
+			
+		</div>
+		
+	</div>
+
+</div>
+
+<!-- Spacer -->
+<div class='spacer box'></div>
+
+<!-- Pledge Submit Form Box -->
+<div class='floatright width-half box' id='pledge'>
+
+	<div class='header'><p>{% if pledgeSuccess %}Share{% else %}Pledge{% endif %}</p></div>
+	<div class='body'>
+		{% if forms.pledgeForm %}
+		
+			{% if pledgeSuccess %}
+				
+				<div id='share' class='tinybox textcenter'>
+
+					<div id='pledgeSuccess'>
+					<img src='/assets/img/pledged-01.gif' alt="You've pledged!" />
+					</div>
+
+					<div>
+					<a href='javascript:shareViaStatus();'><img src='/assets/img/share-via-status-03.gif' alt='Share Via Status' /></a>
+						<div class='hidden' id='status_share_form'>
+							{% if forms.statusForm %}
+								{{ renderForm(forms.statusForm, sys, id='status_form', action='#', method='post', class='yvr-form boxform textleft center') }}
+							{% else %}
+								Status sharing is currently unavailable.
+							{% endif %}
+						</div>
+					</div>
+						
+					<div>
+					<a href='#TB_inline?height=155&width=300&inlineId=hiddenModalContent&modal=true' class='thickbox'><img src='/assets/img/share-via-email-03.gif' alt='Share Via Email' /></a>
+						<div class='hidden' id='email_invites_form'>
+							{% if forms.inviteForm %}
+								{{ renderForm(forms.inviteForm, sys, id='invite_form', action='#', method='post', class='yvr-form boxform textleft center') }}
+							{% else %}
+								Email invites are currently unavailable.
+							{% endif %}						
+						</div>
+					</div>
+					
+				</div>
+				
+			{% else %}
+				{{ renderForm(forms.pledgeForm, sys, id='pledge_form', action='/_api/data/pledge', method='post', class='yvr-form textleft center') }}
+			{% endif %}
+		
+		{% else %}
+			<p>Pledging is currently closed.<br />We apologize for any inconvenience.</p>
+		{% endif %}
+	</div>
+
+</div>
 
 {% endblock %}

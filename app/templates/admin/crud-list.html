@@ -1,0 +1,28 @@
+{% extends "admin/_admin.html" %}
+{% from "_macros.html" import renderForm %}
+
+{% block subtitle %}Data Viewer{% endblock %}
+
+{% block content %}
+
+	{% if records %}
+
+		<h2><b>Kind:</b> {{ type }}</h2>
+
+
+		<ul>
+			{% for record in records %}
+				<li>{% if record.key().name() %}<b>Name:</b> {{ record.key().name() }}{% else %}<b>ID:</b> {{ record.key().id() }}{% endif %}
+					{% if record.modifiedAt %}, <b>Modified:</b> {{ record.modifiedAt }}{% endif %}{% if record.createdAt %}, <b>Created:</b> {{ record.createdAt }}{% endif %}
+					<ul>
+						<li><a href='/manage/data/key/{{ record.key() }}'>View</a> | <a href='/manage/data/key/{{ record.key() }}?edit=true'>Edit</a> | <a href='/manage/data/delete/{{ record.key() }}'>Delete</a></li>
+					</ul>
+				</li>
+			{% endfor %}
+		</ul>
+
+	{% else %}
+		<p>No recordlist data given.</p>
+	{% endif %}
+
+{% endblock %}

@@ -1,5 +1,3 @@
-<script src="http://connect.facebook.net/en_US/all.js"></script>
-
 <script>
 
 	FB.init({
@@ -10,26 +8,42 @@
 	});
 	
 
-	function setInfo(response)
+	function setInputValue(id, value)
+	{
+		if(value != null && value != false && value != '')
+		{
+			$('#'+id).val(value); // Sets value of input field control			
+			$('#'+id).addClass('hidden'); // Hides input field control
+			$('#'+id).parent().append('<p id="'+id+'-set" class="setfield">'+value+'</p>');	// Sets it to be uneditable text
+		}
+		else
+		{
+			return null; // Graceful fail
+		}
+	}
+
+	function fbSetInfo(response)
 	{	
-		$('#firstname_input').val(response.first_name);
-		$('#lastname_input').val(response.last_name);
-		$('#email_input').val(response.email);
-		$('#u_key_control').val('{{ u_key }}');
-		$('#u_next_action_control').val(document.location.href+'&pledgeSuccess=True');
-		$('#u_prev_action_control').val(document.location.href);
+		setInputValue('firstname_input', response.first_name); // Set firstname field
+		setInputValue('lastname_input', response.last_name); // Set lastname field
+		setInputValue('email_input', response.email); // Set email field
+
+		{% if u_key %}$('#u_key_control').val('{{ u_key }}');{% endif %} // Set key field, if it's defined
+
+		$('#u_next_action_control').val('{% if sys.is_dev %}http://localhost:8080/{% else %}http://yvrevolution.appspot.com/{% endif %}?pledgeSuccess=True'); // Set next action for form
+
+		$('#u_prev_action_control').val('{% if sys.is_dev %}http://localhost:8080/{% else %}http://yvrevolution.appspot.com/{% endif %}?pledgeFail=true'); // Set previous action for form, will be returned here for validation errors
+		
+		$('.authbutton').addClass('hidden'); // Hide auth buttons
+		$('#username').html('<strong>'+response.first_name+' '+response.last_name+'</strong>'); // Set username field
+		$('#userid').removeClass('hidden'); // Show the user ID box
 	}
 	
 	function onLogin()
 	{
-		FB.api('/me', setInfo);
-	}	
+		FB.api('/me', fbSetInfo);
+	}
 	
-	function setSubscribes()
-	{
-		FB.Event.subscribe('fb.log', function (response) {alert(response);})
-	}	
-
 	function fbLogin()
 	{
 		FB.login(
@@ -38,16 +52,14 @@
 			{
 				if(response.session)
 				{
-					$('#auth_status').text('Success');
 					onLogin();
 				}
 				else
 				{
-					$('#auth_status').text('Failure');
+					alert('Auth fail');
 				}
 			}
 		, {perms:'sms,email'});
-
 	}
 	
 	function shareViaStatus()
@@ -74,7 +86,7 @@
 			function(response)
 			{
 				if (response && response.post_id) {
-					alert('Post was published.');
+					alert('Thanks for sharing! Your status has been posted.');
 				}
 				else
 				{
@@ -82,6 +94,11 @@
 				}
 			}
  		);
+	}
+	
+	function shareViaEmail()
+	{
+		
 	}
 
 

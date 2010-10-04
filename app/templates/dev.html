@@ -8,8 +8,8 @@
 	<p><b>Environment Vars:</b><br />
 		{% if ev %}
 			<ul>
-				{% for item in ev %}
-					<li>{{ item }} => {{ ev.item }}</li>
+				{% for key, item in ev.items() %}
+					<li><b>{{ key }}</b> => {{ item }}</li>
 				{% endfor %}
 			</ul>
 		{% else %}
