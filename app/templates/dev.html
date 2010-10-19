@@ -17,4 +17,22 @@
 		{% endif %}
 	</p>
 
+<h2>List Creation:</h2>
+{% if list_keys %}
+<p><b>Lists were properly created.</b><br />
+	<ul>
+		{% for item in list_keys %}
+		<li>{{ item }}</li>
+		{% endfor %}
+	</ul>
+</p>
+{% else %}
+<p>No lists created.</p>
+{% endif %}
+
+<h2>Memcache Flush:</h2>
+{% if memflush %}
+<p><b>Memcache successfully flushed.</b></p>
+{% endif %}
+
 {% endblock %}

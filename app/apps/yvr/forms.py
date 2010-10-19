@@ -1,3 +1,4 @@
+import logging
 from google.appengine.api import memcache
 from apps.yvr.models import List, InterestList, PhoneList, EmailList
 from tipfy.ext.wtforms import Form, fields, validators
@@ -19,15 +20,17 @@ class MultiCheckboxField(fields.SelectMultipleField):
 def get_list_choices():
 
     choices_cached = memcache.get('list-choices')
+
     if choices_cached is None:
 
         q = List.all().filter('show_public =', True).fetch(20)
         choices = []
-    
+            
         if len(q) > 0:
             for choice in q:
                 choices.append((str(choice.key()), choice.form_question))
 
+        
             memcache.set('list-choices', choices)
             return choices
         else:

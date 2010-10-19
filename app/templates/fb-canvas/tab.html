@@ -4,3 +4,7 @@
 {% block wrapperid %}wrapper-compact{% endblock %}
 
 {% block precontent %}{% include "_mast_layout_compact.html" %}{% endblock %}
+
+{% block content %}
+<div class='textcenter center' id='submit_box'><fb:submit form='pledge_form'>{{ img('pledge-0.1.gif', 'Pledge now!', sys) }}</fb:submit></div>
+{% endblock %}

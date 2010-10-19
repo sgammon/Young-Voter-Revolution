@@ -8,7 +8,7 @@ from tipfy import RequestHandler, Response, abort, redirect, Tipfy, url_for
 from tipfy.ext.jinja2 import render_response as jrender, Environment, ModuleLoader, FileSystemLoader
 from wtforms.validators import ValidationError
 
-from apps.yvr.models import FacebookUser, Pledge, MicrositeUser, ListMember
+from apps.yvr.models import FacebookUser, Pledge, MicrositeUser, ListMember, List, InterestList, PhoneList, EmailList
 from apps.yvr.forms import PledgeLanding, EmailInvites
 
 
@@ -58,10 +58,12 @@ class YVRLoader(FileSystemLoader):
 
         # Debug logging
         if y_cfg.get('enable_logging'): do_log = True;
+        else: do_log = False
         if do_log: logging.debug('YVR Loader received request for name \''+str(name)+'\'.')
         
         # Try the in-memory supercache
         if y_cfg.get('use_memory_cache'): bytecode = get_tdata_from_fastcache(b64_name, do_log)
+        else: bytecode = None
         
         if bytecode is None: # Not found in fastcache
         
@@ -170,7 +172,19 @@ class DevHandler(YVRRequestHandler):
     def get(self):
 
         """ Basic dev handler for debugging. """
-        return self.render('dev.html', title='Dev Handler', ev=os.environ)
+        
+        lists_keys = False
+        if self.request.args.get('createLists') == 'true':
+            lists = []
+            lists.append(List(name='SMS Vote Reminders', weight=1, form_question='Please send me a reminder to vote November 2nd via SMS and Email', show_public=True, uses_sms=True, uses_email=True))
+            lists.append(EmailList(name='Email Vote Reminders', weight=2, form_question='I want to volunteer to help get my peers out to vote this election.', show_public=True, uses_sms=False, uses_email=False))
+            lists.append(InterestList(name='Volunteers', weight=3, form_question='Sign me up to receive periodic messages via SMS and email from the campaign', show_public=True, uses_sms=True, uses_email=True))
+            
+            lists_keys = db.put(lists)
+        
+        memflush = memcache.flush_all()
+        
+        return self.render('dev.html', title='Dev Handler', ev=os.environ, list_keys=lists_keys, memflush=memflush)
 
 
 #### ENDPOINT FOR SUBMITTING PLEDGES

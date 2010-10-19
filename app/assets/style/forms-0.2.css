@@ -105,6 +105,11 @@
     padding-bottom:20px;
 }
 
+#u_lists li
+{
+    padding-bottom:10px;
+}
+
 .boxform
 {
     width:250px !important;

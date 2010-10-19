@@ -20,6 +20,17 @@
 
 {%- endmacro %}
 
+{% macro script(url, sys, absolute=True) -%}
+	
+	{% if absolute %}
+		{% if sys.dev.is_dev %}
+			<script src='http://localhost:8080/assets/js/{{ url }}'></script>
+		{% else %}
+			<script src='http://yvrevolution.appspot.com/assets/js/{{ url }}'></script>
+		{% endif %}
+	{% else %}<script src='/assets/js/{{ url }}'></script>{% endif %}
+
+{%- endmacro %}
 
 {% macro style(url, media='', absolute=False) -%}
 

@@ -4,6 +4,8 @@ from google.appengine.ext import db
 
 from apps.yvr import models
 
+from . import YVRRequestHandler
+
 from tipfy import RequestHandler, Response, abort, redirect
 from tipfy.ext.jinja2 import render_response, Jinja2Mixin
 
@@ -11,11 +13,30 @@ from tipfy.ext.wtforms import fields
 from wtforms.ext.appengine.db import model_form
 
 
-class Index(RequestHandler):
-    pass
+class Index(YVRRequestHandler):
+    
+    def get(self):
+        
+        model_groups = {}
+        for model in models.models_list:
+            
+            q = model.all()
+            c = q.count()
+            
+            if c > 5:
+                fold_model_list = True
+            else:
+                fold_model_list = False
+                
+            data = q.fetch(5)
+            
+            model_groups[model.kind()] = {'fold':fold_model_list, 'data':data, 'count':c}
+            
+        
+        return self.render('admin/crud-admin.html', model_groups=model_groups)
 
 
-class View(RequestHandler):
+class View(YVRRequestHandler):
 
     def get(self, key):
         
@@ -28,13 +49,13 @@ class View(RequestHandler):
             else:
                 editform = False
         
-        return render_response('admin/crud-view.html', object=_m, form=form(self.request.form, obj=_m), editform=editform)
+        return self.render('admin/crud-view.html', object=_m, form=form(self.request.form, obj=_m), editform=editform)
         
     def post(self):
         pass
     
 
-class List(RequestHandler):
+class List(YVRRequestHandler):
     
     def get(self, type):
 
@@ -58,14 +79,14 @@ class List(RequestHandler):
             if len(type_r) > 25:
                 n_link = True
                 if self.request.args.get('offset', False):
-                    n_offset = len(type_r)+self.request.arge.get('offset')
+                    n_offset = len(type_r)+self.request.args.get('offset')
                 else:
                     n_offset = len(type_r)
             else:
                 n_link = False
                 n_offset = 0
 
-            return render_response('admin/crud-list.html', type=type, records=type_r, previous_link=p_link, previous_offset=p_offset, next_link=n_link, next_offset=n_offset)
+            return self.render('admin/crud-list.html', type=type, records=type_r, previous_link=p_link, previous_offset=p_offset, next_link=n_link, next_offset=n_offset)
                 
             
         except ImportError, e:
@@ -76,7 +97,7 @@ class List(RequestHandler):
         pass
         
         
-class Create(RequestHandler):
+class Create(YVRRequestHandler):
     
     def get(self, type):
         pass
@@ -85,7 +106,7 @@ class Create(RequestHandler):
         pass
         
         
-class Delete(RequestHandler):
+class Delete(YVRRequestHandler):
     
     def get(self, key):
         pass

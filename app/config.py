@@ -28,14 +28,12 @@ config['tipfy.ext.auth.facebook'] = {
 }
 
 config['tipfy.ext.jinja2'] = {
-    'templates_dir': 'templates',
-    'templates_compiled_target': 'templates/compiled',
     'force_use_compiled': False,
     'engine_factory': 'apps.yvr.handlers.yvr_template_factory'
 }
 
 config['yvr.out.template_factory'] = {
-    'enable_logging':True,
+    'enable_logging':False,
     'use_memory_cache':True,
     'use_memcache':True
 }

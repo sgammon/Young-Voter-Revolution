@@ -21,6 +21,28 @@
 			return null; // Graceful fail
 		}
 	}
+	
+	function setNextPrevious(mode)
+	{
+		if(mode == 'microsite')
+		{
+			$('u_next_action_control').val('{% if sys.is_dev %}http://localhost:8080/{% else %}http://yvrevolution.appspot.com/{% endif %}?pledgeSuccess=true')
+			$('#u_prev_action_control').val('{% if sys.is_dev %}http://localhost:8080/{% else %}http://yvrevolution.appspot.com/{% endif %}?pledgeFailure=true');
+		}
+		
+		else if(mode == 'fb-main')
+		{
+			$('u_next_action_control').val('{% if sys.is_dev %}http://localhost:8080/{% else %}http://apps.facebook.com/yvrevolution/{% endif %}?pledgeSuccess=true')
+			$('#u_prev_action_control').val('{% if sys.is_dev %}http://localhost:8080/{% else %}http://yvrevolution.appspot.com/{% endif %}?pledgeFailure=true');
+		}
+		
+		else if(mode == 'fb-tab')
+		{
+			$('u_next_action_control').val('{% if sys.is_dev %}http://localhost:8080/{% else %}http://yvrevolution.appspot.com/{% endif %}?pledgeSuccess=true')
+			$('#u_prev_action_control').val('{% if sys.is_dev %}http://localhost:8080/{% else %}http://yvrevolution.appspot.com/{% endif %}?pledgeFailure=true');
+
+		}
+	}
 
 	function fbSetInfo(response)
 	{	
@@ -29,10 +51,6 @@
 		setInputValue('email_input', response.email); // Set email field
 
 		{% if u_key %}$('#u_key_control').val('{{ u_key }}');{% endif %} // Set key field, if it's defined
-
-		$('#u_next_action_control').val('{% if sys.is_dev %}http://localhost:8080/{% else %}http://yvrevolution.appspot.com/{% endif %}?pledgeSuccess=True'); // Set next action for form
-
-		$('#u_prev_action_control').val('{% if sys.is_dev %}http://localhost:8080/{% else %}http://yvrevolution.appspot.com/{% endif %}?pledgeFail=true'); // Set previous action for form, will be returned here for validation errors
 		
 		$('.authbutton').addClass('hidden'); // Hide auth buttons
 		$('#username').html('<strong>'+response.first_name+' '+response.last_name+'</strong>'); // Set username field
@@ -62,38 +80,47 @@
 		, {perms:'sms,email'});
 	}
 	
+	function afterStatusPost(response)
+	{
+		if (response && response.post_id)
+		{
+			alert('Thanks for spreading the word on Facebook!');
+		}
+		else
+		{
+			alert('Unfortunately, your shared Facebook status could not be posted. Please try again later.');
+		}
+	}
+	
 	function shareViaStatus()
 	{
-		FB.ui(
-		{
-			method: 'stream.publish',
-			message: 'I pledge to vote in 2010! I\'m young, I\'m blue and I play to win!',
-			attachment: {
-				name: 'Pledge to Vote',
-				caption: 'Young Voter Revolution 2010',
-				description: (
-					'There are too many important issues on the ballot ' +
-					'to ignore. If you want to see the world around you improve, ' +
-					'pledge to vote today!.'
-				),
-				href: 'http://yvrevolution.appspot.com'
-			},
-			action_links: [
-				{ text: 'Pledge!', href: 'http://yvrevolution.appspot.com/fb' }
-			],
-			user_message_prompt: 'Urge your friends to pledge too!'},
-			
-			function(response)
-			{
-				if (response && response.post_id) {
-					alert('Thanks for sharing! Your status has been posted.');
-				}
-				else
-				{
-					alert('Post was not published.');
-				}
-			}
- 		);
+		var publish = {
+		  method: 'stream.publish',
+		  message: 'pledged to vote on November 2nd!',
+		  attachment: {
+		    name: 'Young Voter Revolution 2010',
+		    caption: 'Pledge today, make your voice heard!',
+		    description: (
+		      'A small JavaScript library that allows you to harness ' +
+		      'the power of Facebook, bringing the user\'s identity, ' +
+		      'social graph and distribution power to your site.'
+		    ),
+		    href: 'http://yvrevolution.appspot.com/',
+		    media: [
+		      {
+		        type: 'image',
+		        href: 'http://yvrevolution.appspot.com/',
+		        src: 'http://yvrevolution.appspot.com/assets/img/layout/microsite-17_01-A.gif'
+		      }
+		    ]
+		  },
+		  action_links: [
+		    { text: 'Young Voter Revolution 2010', href: 'http://yvrevolution.appspot.com/' }
+		  ],
+		  user_prompt_message: 'Share your pledge with your friends!'
+		};
+
+		FB.ui(publish, afterStatusPost);
 	}
 	
 	function shareViaEmail()

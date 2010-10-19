@@ -108,19 +108,19 @@ h1
 }
 #issueslist .issue
 {
-    height:45px;
+    min-height:45px;
     background:#a3adcb;
-    line-height:50px;
+    line-height:30px;
     padding-left:9px;
     padding-right:9px;
     margin-bottom:20px;
     font-size:19px;
     color:white;
     text-transform:uppercase;
+    text-align:left;
 }
 
-
-#fb div {  float:left; }
+#fb div { margin-left:auto; margin-right:auto; }
 #fb:link div { background-image:url('/assets/img/signin/facebook-01.png'); background-position:top left; }
 #fb:hover div { background-position:center left !important; }
 #fb:active div { background-position:bottom left !important; }

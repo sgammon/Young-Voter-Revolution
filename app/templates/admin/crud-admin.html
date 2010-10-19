@@ -1,0 +1,26 @@
+{% extends "admin/_admin.html" %}
+
+{% block subtitle %}Data Viewer - Index{% endblock %}
+
+{% block content %}
+
+	<h2>Data Groups</h2>
+	
+	{% if model_groups %}
+	<ul class='model_groups'>
+		{% for name, group in model_groups.items() %}
+		<li class='kindname'>{{ name }}: (<a href='/manage/data/create'>Create</a>){% if group.count == 0 %} <ul><li>No Records</li></ul></li>{% else %}
+			<ul class='record_groups'>
+				{% for item in group.data %}
+				<li class='record'>{{ item.key() }} (<a href='/manage/data/key/{{ item.key() }}'>Edit</a>, <a href='/manage/data/delete/{{ item.key }}'>Delete</a>)</li>
+				{% endfor %}
+			</ul>
+			{% endif %}
+		</li>
+		{% endfor %}
+	</ul>
+	{% else %}
+	<p>No data objects.</p>
+	{% endif %}
+
+{% endblock %}
