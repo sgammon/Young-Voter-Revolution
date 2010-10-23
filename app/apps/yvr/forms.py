@@ -37,6 +37,27 @@ def get_list_choices():
             return []
     else:
         return choices_cached
+        
+def get_list_choices_by_phone():
+
+    choices_cached = memcache.get('list-choices-phone')
+
+    if choices_cached is None:
+
+        q = List.all().filter('uses_sms =', True).fetch(20)
+        choices = []
+            
+        if len(q) > 0:
+            for choice in q:
+                choices.append((str(choice.key()), choice.name))
+
+        
+            memcache.set('list-choices-phone', choices)
+            return choices
+        else:
+            return []
+    else:
+        return choices_cached        
 
 
 class PledgeLanding(Form):
@@ -86,3 +107,11 @@ class EmailInvites(Form):
     
 class ShareStatus(Form):
     personal_message = fields.TextAreaField(id='share_message_input')
+    
+
+class SendTextForm(Form):
+    
+    dest_list = fields.SelectField(choices=get_list_choices_by_phone())
+    action = fields.HiddenField(default='submit')
+    message = fields.TextAreaField(id='message')
+    submit = fields.SubmitField()

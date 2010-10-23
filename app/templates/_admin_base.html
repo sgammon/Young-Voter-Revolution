@@ -1,0 +1,27 @@
+<html>
+
+
+	<head>
+
+		<title>{% block title %}{% endblock %}{{ title }}</title>
+		
+		{% include "_north.html" %}
+		
+		{% block head %}
+    	{% endblock %}
+
+	</head>
+
+	<body class='yvr'>    
+		
+
+		<div id='wrapper'>
+			
+			<div id='content' class='{% block contentclass %}{% endblock %}'>
+				{% block content %}<p>YVR</p>{% endblock %}
+	   		</div>
+
+		</div>
+	</body>
+
+</html>

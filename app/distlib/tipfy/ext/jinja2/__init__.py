@@ -10,9 +10,7 @@
     :copyright: 2010 by tipfy.org.
     :license: BSD, see LICENSE.txt for more details.
 """
-import base64
 from jinja2 import Environment, FileSystemLoader, ModuleLoader
-
 
 from tipfy import Tipfy, import_string, url_for
 
@@ -76,7 +74,8 @@ class Jinja2Mixin(object):
         request_context = self.request.context.copy()
         request_context.update(context)
         return render_response(filename, **request_context)
-        
+
+
 def create_jinja2_instance():
     """Returns the Jinja2 environment.
 

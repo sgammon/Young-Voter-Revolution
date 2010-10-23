@@ -42,6 +42,7 @@ def get_rules(app):
         
         ## Admin Panel Stuff
         Rule('/manage/data', endpoint='admin-data-index', handler='apps.yvr.handlers.admin.Index'), ## admin panel index page
+        Rule('/manage/send', endpoint='send-sms', handler='apps.yvr.handlers.admin.SendText'),
         Rule('/manage/data/key/<string:key>', endpoint='admin-data-view', handler='apps.yvr.handlers.admin.View'), ## generates a view/edit for a record        
         Rule('/manage/data/list/<string:type>', endpoint='admin-data-list', handler='apps.yvr.handlers.admin.List'), ## lists records for a kind
         Rule('/manage/data/create/<string:type>', endpoint='admin-data-create', handler='apps.yvr.handlers.admin.Create'), ## generate create form for data item

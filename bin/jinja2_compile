@@ -19,7 +19,7 @@ sys.path[0:0] = [
   join(base, 'etc/eggs/tipfy.ext.auth.twitter-0.1-py2.5.egg'),
   join(base, 'etc/eggs/tipfy.ext.auth.google-0.1-py2.5.egg'),
   join(base, 'etc/eggs/tipfy.ext.blobstore-0.6.1-py2.5.egg'),
-  join(base, 'etc/eggs/tipfy.ext.db-0.6.2-py2.5.egg'),
+  join(base, 'etc/eggs/tipfy.ext.db-0.7-py2.5.egg'),
   join(base, 'etc/eggs/tipfy.ext.debugger-0.6.1-py2.5.egg'),
   join(base, 'etc/eggs/tipfy.ext.i18n-0.7.1-py2.5.egg'),
   join(base, 'etc/eggs/tipfy.ext.jinja2-0.7-py2.5.egg'),
@@ -30,7 +30,7 @@ sys.path[0:0] = [
   join(base, 'etc/eggs/WTForms-0.6.1-py2.5.egg'),
   join(base, 'etc/eggs/twilio-2.0.6-py2.5.egg'),
   join(base, 'etc/eggs/simplejson-2.1.1-py2.5.egg'),
-  join(base, 'etc/eggs/Jinja2-2.5.2-py2.5.egg'),
+  join(base, 'etc/eggs/Jinja2-2.5.5-py2.5.egg'),
   join(base, 'etc/eggs/gaepytz-2010l-py2.5.egg'),
   join(base, 'etc/eggs/Werkzeug-0.6.2-py2.5.egg'),
   ]

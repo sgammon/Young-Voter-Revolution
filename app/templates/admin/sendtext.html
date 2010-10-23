@@ -1,0 +1,8 @@
+{% from "_macros.html" import renderForm %}
+
+
+<h2>SMS Broadcast</h2>
+
+<div>
+	{{ renderForm(form, sys, id='sms-send-form', action='/manage/send', method='post', class='yvr-form crudform') }}
+</div>
