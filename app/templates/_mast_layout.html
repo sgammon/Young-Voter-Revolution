@@ -5,13 +5,9 @@
 	<div id='right'>
 			<div id='authbar' class='textcenter center'>
 				<div class='center' id='userbox'>
-					{% if user %}
-						<div id='userid'>Welcome, <span id='username'>{{ user }}</span>! <span id='provider'>(from facebook - <a href='/logout'>not you?</a>)</div>
-					{% else %}
 						<!-- <a href='javascript:fbLogin();' id='fb' class='authbutton'><div></div></a> -->
 						<!-- <a href='/tw' id='tw' class='authbutton'><div></div></a> Twitter auth coming soon -->
 						<div id='userid' class='hidden'></div>
-					{% endif %}
 				</div>
 			</div>
 			<div class='textcenter center'>

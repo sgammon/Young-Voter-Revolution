@@ -21,6 +21,7 @@ import tipfy
 
 # Is this the development server?
 debug = os.environ.get('SERVER_SOFTWARE', '').startswith('Dev')
+debug = False
 
 # Instantiate the application.
 app = tipfy.make_wsgi_app(config=config.config, debug=debug)
